@@ -34,7 +34,7 @@ function loadData() {
     });
 
     $.getJSON(url, function (data){
-      
+
       $.ajax({
         url: url,
         method: 'GET',
@@ -44,14 +44,26 @@ function loadData() {
         throw err;
       });
 
-      articles = data.response.docs;
+      //Old Code for reference
+      /*articles = data.response.docs;
         for(var i=0; i < articles.length; i++){
             var article = articles[i];
             $nytElem.append('<li class="article">' + '<a href="'+article.web_url+'">'+article.headline.main+ '</a>' + '<p>' + article.snippet + '</p>' + '</li>');
+        };*/
+
+        //New code that displays things much cleaner
+        articles = data.response.docs;
+        for(var i = 0; i < articles.length; i++){
+          var article = articles[i];
+          $nytElem.append('<li class = "article">' +
+            '<a href="'+article.web_url+'">'+article.headline.main+
+              '</a>'+
+            '<p>' + article.snippet + '</p>' +
+          '</li>');
         };
 
       });
-  // Built by LucyBot. www.lucybot.com
+      // Built by LucyBot. www.lucybot.com
     return false;
     };
 
