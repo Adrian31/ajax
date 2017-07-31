@@ -25,8 +25,34 @@ function loadData() {
     $body.append('<img class="bgimg" src="' + streetviewUrl + '">');
 
     // YOUR CODE GOES HERE!
+
+
+    var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
+    url += '?' + $.param({
+      'api-key': "465d16df04094182b0082fff05e0ecca",
+      'q': address,
+    });
+
+    $.getJSON(url, function (data){
+      
+      $.ajax({
+        url: url,
+        method: 'GET',
+      }).done(function(result) {
+        console.log(result);
+      }).fail(function(err) {
+        throw err;
+      });
+
+      articles = data.response.docs;
+        for(var i=0; i < articles.length; i++){
+            var article = articles[i];
+            $nytElem.append('<li class="article">' + '<a href="'+article.web_url+'">'+article.headline.main+ '</a>' + '<p>' + article.snippet + '</p>' + '</li>');
+        };
+
+      });
+  // Built by LucyBot. www.lucybot.com
     return false;
-    //600x400
-};
+    };
 
 $('#form-container').submit(loadData);
